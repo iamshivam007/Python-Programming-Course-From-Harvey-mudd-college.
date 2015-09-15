@@ -1,0 +1,42 @@
+def cycle(s,n):
+    n=n%len(s)
+    return s[-n:]+s[:len(s)-n]
+
+def HMMM():
+    sum=0.0
+    test=0
+    n=0;
+    while True:
+        test = int(raw_input())
+        if test==0:
+            break
+        else:
+            n=n+1
+            sum=sum+test
+            print sum
+            print sum/n
+
+def indexNearest42( L ):
+    temp=0
+    defe=100000000
+    for x in L:
+        if defe > abs(42-abs(x)):
+            defe=42-abs(x)
+            temp=x
+    print L.index(temp)
+
+def longestDNA( s ):
+    list=['A','C','G','T']
+    temp=""
+    temp1=""
+    for x in s:
+        if x in list:
+            temp=temp+x
+        else:
+            if len(temp) > len(temp1):
+                temp1=temp
+            temp=""
+        if len(temp)>len(temp1):
+            temp1=temp
+    return temp1
+            
