@@ -1,0 +1,83 @@
+from math import*
+def menu():
+    print 
+    print "(0) Input a new list"
+    print "(1) Print the current list"
+    print "(2) Find the average price"
+    print "(3) Find the standard deviation"
+    print "(4) Find the min and its day"
+    print "(5) Find the max and its day"
+    print "(5) Find the max and its day"
+    print "(6) Your TT investment plan"
+    print "(9) Quit"
+    print 
+
+def newlist():
+    l=raw_input("enter new list")
+    l=l.replace('[','')
+    l=l.replace(']','')
+    l=l.split(',')
+    list=[]
+    for x in l:
+        list.append(float(x));
+    return list;
+
+def printList(l):
+    print "Day","price"
+    print "--- -----"
+    for x in range(len(l)):
+        print x,"%7.2f" %l[x]
+    
+def averagePrice(l):
+    sum=0.0;
+    for x in l:
+        sum = sum+x;
+    return sum/len(l)
+
+def standardDev(l):
+    sum=0.0;
+    ave = averagePrice(l);
+    for x in l:
+        sum=sum+pow((x-ave),2);
+    sum=sum/len(l);
+    sum=sqrt(sum);
+    return sum;
+
+def maxDay(l):
+    l=[max(l),l.index(max(l))]
+    print l
+def minDay(l):
+    l=[min(l),l.index(min(l))]
+    print l
+def TTPlan(l):
+    l=[l.index(min(l)),l.index(max(l)),max(l)-min(l)]
+    print l
+def main():
+    l= [10,20,30]
+    while True:
+        menu();
+        uc=int(raw_input("enter your choice:"));
+        if uc==9:
+            print
+            print
+            print "See you yesterday!"
+            break;
+        elif uc==0:
+            l=newlist();
+        elif uc==1:
+            printList(l);
+        elif uc==2:
+            print averagePrice(l);
+        elif uc==3:
+            print standardDev(l);
+        elif uc==4:
+            minDay(l);
+        elif uc==5:
+            maxDay(l);
+        elif uc==6:
+            TTPlan(l);
+        else :
+            print "The choice 7 is not an option."
+            print "try again."
+
+    
