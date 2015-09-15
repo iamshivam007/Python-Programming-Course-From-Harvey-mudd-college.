@@ -1,0 +1,35 @@
+from random import*
+from math import*
+def dartThrow():
+    x=uniform(-1.0,1.0)
+    y=uniform(-1.0,1.0)
+    z= ((x**2) + (y**2))**.5
+    if z < 1 :
+        return True
+    else :
+        return False
+
+def forPi(n):
+    numhit  = 0
+    numthrow=0
+    for x in range(n):
+        if dartThrow():
+            numhit += 1
+        numthrow += 1
+        print numhit,"hits out of",numthrow,"throws so that pi is",4.0*numhit/(numthrow)
+    return 4.0*numhit/numthrow
+
+
+
+def whilePi(n):
+    numhit = 0
+    numthrow = 0
+    estipi = 4.0
+    while abs(estipi - pi) > n:
+        if dartThrow():
+            numhit += 1
+        numthrow += 1
+        estipi = 4.0*numhit/(numthrow)
+        print numhit,"hits out of",numthrow,"throws so that pi is",estipi
+    return numthrow
+        
