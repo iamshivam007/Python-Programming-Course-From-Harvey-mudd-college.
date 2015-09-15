@@ -1,0 +1,33 @@
+# python 2
+#
+# Homework 3, Problem 1.5
+#
+# Name: shivam jindal
+#
+# Date:21-06-2015
+# Overall comments:
+#
+
+def mult(n,m):
+    """
+    it return multiplication of n amd m
+    input : n and m as interger
+    output : n *m
+    """
+
+    if(m==0):
+        return 0
+    elif (m <1):
+        return (-n+mult(n,m+1))
+    else :
+        return (n+mult(n,m-1))
+#
+# Tests
+#
+print "mult(6,7)    42 ==", mult(6,7)
+print "mult(6,-7)  -42 ==", mult(6,-7)
+print "mult(-6,7)  -42 ==", mult(-6,7)
+print "mult(-6,-7)  42 ==", mult(-6,-7)
+print "mult(6,0)     0 ==", mult(6,0)
+print "mult(0,7)     0 ==", mult(0,7)
+print "mult(0,0)     0 ==", mult(0,0)
