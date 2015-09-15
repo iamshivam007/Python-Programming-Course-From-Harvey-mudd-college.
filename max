@@ -1,0 +1,36 @@
+t=int(input())
+for x in range(t):
+	n=int(input())
+	string=raw_input().split()
+	maxinput=int(max(string))
+	a=[]
+	for i in range(10001):
+		a+=[0]
+	for i in range(n):
+		a[int(string[i])]+=1
+	maxi=0
+	coun=0
+	for i in range(maxinput):
+		if a[i] > coun:
+			maxi=i
+			coun=a[i]
+	print maxi,coun
+
+
+
+
+t=int(input())
+for x in range(t):
+	n=int(input())
+	string=raw_input().split()
+	num={}
+	for x in string:
+		num[x]=0
+	for x in string:
+		num[x]+=1
+	max_num=max(num.values())
+	num_list=[]
+	for x in num.keys():
+		if num[x]==max_num:
+			num_list+=[x]
+	print int(min(num_list)),max_num
