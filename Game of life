@@ -1,0 +1,120 @@
+from random import *
+def createOneRow(width):
+    """ returns one row of zeros of width "width"...  
+         You should use this in your
+         createBoard(width, height) function """
+    row = []
+    for col in range(width):
+        row += [0]
+    return row
+
+def createBoard(width, height):
+    board=[]
+    for row in range(height):
+        board+=[createOneRow(width)]
+    return board
+
+def printBoard(A):
+    line=''
+    for row in A:
+        line=''
+        for col in row:
+            line+=str(col)
+        print line
+
+def diagonalize(width, height):
+    """ creates an empty board and then modifies it
+        so that it has a diagonal strip of "on" cells.
+    """
+    a=createBoard(width, height)
+    for i in range(height):
+        for j in range(width):
+            if i==j:
+                a[i][j]=1
+    return a
+
+def innerCells(w, h):
+    a=createBoard(w, h)
+    for i in range(h):
+        for j in range(w):
+            if i==0 or i==h-1 or j==0 or j==w-1:
+                a[i][j]=0
+            else :
+                a[i][j]=1
+    return a
+
+
+def randomCells(w, h):
+    a=createBoard(w, h)
+    for i in range(1,h-1):
+        for j in range(1,w-1):
+            a[i][j]=choice([0,1])
+    return a
+
+def copy(a):
+    rows=len(a)
+    col=len(a[0])
+    b=createBoard(col,rows)
+    for i in range(rows):
+        for j in range(col):
+            b[i][j]=a[i][j]
+    return b
+
+def innerReverse(A):
+    newa=copy(A)
+    rows=len(newa)
+    col=len(newa[0])
+    for i in range(1,rows-1):
+        for j in range(1,col-1):
+            if newa[i][j]==0:
+                newa[i][j]=1
+            elif newa[i][j]==1:
+                newa[i][j]=0
+    return newa
+
+def countNeighbors(row, col, A):
+    result=0
+    i=len(A)
+    j=len(A[0])
+    if row-1 >= 0 and col-1 >= 0:
+        if A[row-1][col-1]==1:
+            result+=1
+    if row-1 >= 0 and col >= 0:
+        if A[row-1][col]==1:
+            result+=1
+    if row-1 >= 0 and col+1 < j:
+        if A[row-1][col+1]==1:
+            result+=1
+    if row >= 0 and col-1 >= 0:
+        if A[row][col-1]==1:
+            result+=1
+    if row >= 0 and col+1 <j:
+        if A[row][col+1]==1:
+            result+=1
+    if row+1 <i and col-1 >= 0:
+        if A[row+1][col-1]==1:
+            result+=1
+    if row+1 <i and col >= 0:
+        if A[row+1][col]==1:
+            result+=1
+    if row+1 < i and col+1 < j:
+        if A[row+1][col+1]==1:
+            result+=1
+    return result
+
+def next_life_generation(A):
+    """ makes a copy of A and then advances one
+        generation of Conway's game of life within
+        the *inner cells* of that copy.
+        The outer edge always stays at 0.
+    """
+    newA=copy(A)
+    rows=len(A)
+    col=len(A[0])
+    for i in range(1,rows-1):
+        for j in range(1,col-1):
+            if countNeighbors(i,j,A) < 2 or countNeighbors(i,j,A) > 3:
+                newA[i][j]=0
+            elif countNeighbors(i,j,A) == 3 and A[i][j]==0:
+                newA[i][j]=1
+    return newA
