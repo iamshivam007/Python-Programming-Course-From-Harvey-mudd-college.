@@ -1,0 +1,50 @@
+from random import*
+from math import* 
+def rs():
+    """ rs chooses a random step and returns it 
+        note that a call to rs() requires parentheses
+        inputs: none at all!
+    """
+    return choice([-1,1])
+
+def rwpos(start,step):
+    if step==0:
+        print start
+        return
+    else:
+        start=start+rs()
+        print "start is",start
+        return rwpos(start,step-1)
+    
+def rwposplain(start,step):
+    if step==0:
+        print start
+        return
+    else:
+          return rwposplain(start+rs(),step-1)
+
+
+def ave_signed_displacement( numtrials ):
+    sum=0
+    for x in range(numtrials) :
+        sum=sum+rwposplain(0,100)
+    print sum/numtrials
+
+def ave_signed_displacement( numtrials ):
+    sum=0
+    for x in range(numtrials) :
+        sum=sum+rwposplain(0,100)
+    print sum**2/numtrials
+
+"""
+   In order to compute the average signed displacement for
+   a random walker after 100 random steps, I 
+     first find total displacment and devide it by numtrias
+
+   Be sure to copy the data and average from at least
+   one of your runs of ave_signed_displacement and
+   at least one of your runs of ave_squared_displacement
+"""
+
+
+
