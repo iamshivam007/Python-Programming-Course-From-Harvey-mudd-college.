@@ -1,0 +1,95 @@
+def isOdd(n):
+    if n%2==0:
+        return False
+    else:
+        return True
+def numToBinary(n):
+    
+    string = ''
+    while n != 0:
+        if n%2==0:
+            string = '0' + string
+        else :
+            string = '1'+ string
+        n=n/2
+    return string
+
+
+def binaryToNum(string):
+    dec=0
+    count=0
+    while string != '':
+        if string[-1]=='1':
+            dec =dec + (2**count);
+        count = count +1
+        string = string[:-1]
+    return dec      
+
+def increment(string):
+    dec=binaryToNum(string)
+    dec=dec+1
+    st=numToBinary(dec)
+    st = "00000000" + st
+    st=st[-8:]
+    return st
+
+
+def count(s,n):
+    print s
+    while n != 0:
+        s=increment(s)
+        print (s)
+        n=n-1;
+    return
+
+
+def numToTernary(n):
+    string = ''
+    while n != 0:
+        if n%3==0:
+            string = '0' + string
+        elif n%3==1:
+            string = '1' + string
+        else :
+            string = '2'+ string
+        n=n/3
+    return string
+
+def ternaryToNum(string):
+    dec=0
+    count=0
+    while string != '':
+        if string[-1]=='1':
+            dec =dec + (3**count);
+        elif string[-1]=='2':
+            dec=dec+ 2*(3**count)
+        count = count +1
+        string = string[:-1]
+    return dec  
+
+def balancedTernaryToNum(string):
+    dec=0
+    count=0
+    while string != '':
+        if string[-1]=='+':
+            dec =dec + (3**count);
+        elif string[-1]=='-':
+            dec=dec - (3**count)
+        count = count +1
+        string = string[:-1]
+    return dec  
+
+
+def numToBalancedTernary(n):
+    string = ''
+    while n != 0:
+        if n%3==0:
+            string = '0' + string
+            n=n/3
+        elif n%3==1:
+            string = '+' + string
+            n=n/3
+        else :
+            string = '-'+ string
+            n=(n+1)/3
+    return string
