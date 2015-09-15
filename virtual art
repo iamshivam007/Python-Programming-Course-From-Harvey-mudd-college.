@@ -1,0 +1,153 @@
+# python 2
+#
+# Homework 10, Problem 1
+#
+# Name:
+#
+class Date:
+    """ a user-defined data structure that
+        stores and manipulates dates
+    """
+
+    # the constructor is always named __init__ !
+    def __init__(self, month, day, year):
+        """ the constructor for objects of type Date """
+        self.month = month
+        self.day = day
+        self.year = year
+
+
+    # the "printing" function is always named __repr__ !
+    def __repr__(self):
+        """ This method returns a string representation for the
+            object of type Date that calls it (named self).
+
+             ** Note that this _can_ be called explicitly, but
+                it more often is used implicitly via the print
+                statement or simply by expressing self's value.
+        """
+        s =  "%02d/%02d/%04d" % (self.month, self.day, self.year)
+        return s
+
+
+    # here is an example of a "method" of the Date class:
+    def isLeapYear(self):
+        """ Returns True if the calling object is
+            in a leap year; False otherwise. """
+        if self.year % 400 == 0: return True
+        elif self.year % 100 == 0: return False
+        elif self.year % 4 == 0: return True
+        return False
+    
+    def copy(self):
+        new = Date(self.month,self.day,self.year)
+        return new
+
+    def equals(self,d2):
+        """ Decides if self and d2 represent the same calendar date,
+            whether or not they are the in the same place in memory.
+        """
+        if self.year == d2.year and self.day == d2.day and self.month == d2.month :
+            return True
+        else :
+            return False
+
+    def tomorrow(self):
+        fdays = 28 + self.isLeapYear()
+        DIM = [0,31,fdays,31,30,31,30,31,31,30,31,30,31]
+        if self.day == DIM[self.month] and self.month == 12:
+            self.day=1
+            self.month=1
+            self.year+=1
+        elif self.day == DIM[self.month] :
+            self.day=1
+            self.month+=1
+        else :
+            self.day+=1
+        
+            
+    def yesterday(self):
+        fdays = 28 + self.isLeapYear()
+        DIM = [0,31,fdays,31,30,31,30,31,31,30,31,30,31]
+        if self.day == 1 and self.month == 1 :
+            self.day = 31
+            self.month = 12
+            self.year -= 1
+        elif self.day == 1 :
+            self.month -= 1
+            self.day = DIM[self.month]
+        else :
+            self.day -= 1
+
+    def addNDays(self, N):
+        if N < 10:
+            for i in range(N):
+                print self
+                self.tomorrow()
+            print self
+        else :
+            print self
+            for i in range(N):
+                self.tomorrow()
+            print "lots of day are skipped"
+            print self
+
+    def subNDays(self, N):
+        if N < 10:
+            for i in range(N):
+                print self
+                self.yesterday()
+            print self
+        else :
+            print self
+            for i in range(N):
+                self.yesterday()
+            print "lots pf day skipped"
+            print self
+
+    def isBefore(self, d2):
+        if self.year < d2.year :
+            return True
+        elif self.year==d2.year and self.month < d2.month :
+            return True
+        elif self.year == d2.year and self.month == self.month and self.day < d2.day:
+            return True
+        else :
+            return False
+
+    def isAfter(self, d2):
+        if self.year > d2.year :
+            return True
+        elif self.year == d2.year and self.year > d2.year:
+            return True
+        elif self.year == d2.year and delf.month == d2.month and self.day > d2.day:
+            return True
+        else:
+            return False
+
+    def diff(self, d2):
+        result = 0
+        self_copy = self.copy()
+        d2_copy = d2.copy()
+        if self_copy.equals(d2_copy):
+            return 0
+        elif self_copy.isBefore(d2_copy):
+            while True :
+                if self_copy.equals(d2_copy):
+                    return -1*result
+                else :
+                    self_copy.tomorrow()
+                    result+=1
+        elif self_copy.isAfter(d2_copy):
+            while True :
+                if self_copy.equals(d2_copy):
+                    return result
+                else :
+                    self_copy.yesterday()
+                    result+=1
+    def dow(self):
+        d=Date(1,1,1900)
+        d_code=0
+        days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+        code = self.diff(d)%7
+        return days[code]
