@@ -1,0 +1,39 @@
+t=int(input())
+for x in xrange(t):
+    diff=0
+    temp=0
+    count=0
+    l=[]
+    h=[]
+    n=raw_input().split()
+    height=int(n[1])
+    n=int(n[0])
+    for i in xrange(n):
+        p=raw_input().split()
+        l+=[int(p[0])]
+        h+=[int(p[1])]
+    if height > h[0]-l[0]+1:
+        temp=height-(h[0]-l[0]+1)
+        count=temp
+        if l[0] >= temp:
+            l[0]=l[0]-temp
+        else :
+            temp-=l[0]
+            l[0]=0
+            h[0]+=temp
+        for i in xrange(1,n):
+            if l[i] > l[0]:
+                l1=(l[i]-l[0])
+            if h[i] < h[0]:
+                h1=(h[0]-h[i])
+            count+=l1+h1
+    else:
+        for i in xrange(1,n):
+            if l[i] > l[0]:
+                l1=l[i]-l[0]
+            if h[i] < h[0]:
+                h1=h[0]-h[i]
+            count+=l1+h1
+    print count
+        
+        
