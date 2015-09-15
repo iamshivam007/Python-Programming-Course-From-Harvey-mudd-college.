@@ -1,0 +1,88 @@
+def printRect(p,q,r):
+    for x in range(q):
+        for y in range(p):
+            print r,
+        print
+
+#printRect(4,6,'%')
+
+
+def printTriangle(w,s,rsup):
+    if rsup==True:
+        for x in range(1,w+1):
+            for y in range(x):
+                print s,
+            print
+    else:
+        while w>0:
+            y=w;
+            while y>0:
+                print s,
+                y=y-1
+            w=w-1;  
+            print
+
+#printTriangle( 3, '@', True )
+#printTriangle( 3, '@', False )
+
+def printBumps( num, symbol1, symbol2 ):
+    for x in range(1,num+1):
+        printTriangle(x,symbol1,True)
+        printTriangle(x,symbol2,False)
+
+#printBumps( 4, '%', '#' )
+
+def printDiamond( width, symbol ):
+    x=width;
+    while x>0:
+        print ' '*(x-1),
+        for y in range(width-x+1):
+            print symbol,
+        print
+        x=x-1
+    x=width-1
+    z=x
+    for y in range(1,width):
+        print ' '*y,
+        while x:
+            print symbol,
+            x=x-1
+        print
+        x=width-1-y
+
+#printDiamond( 10, '&' )
+
+def printStripedDiamond( width, sym, sym2):
+    x=width;
+    flag=True
+    while x>0:
+        print ' '*(x-1),
+        flag=True
+        for y in range(width-x+1):
+            if flag:
+                print sym,
+                flag=False
+            else:
+                print sym2,
+                flag=True
+        print
+        x=x-1
+    x=width-1
+    z=x
+    for y in range(1,width):
+        print ' '*y,
+        flag=False
+        while x:
+            if x==1:
+                print sym,
+            elif flag==True:
+                print sym,
+                flag=False
+            else:
+                print sym2,
+                flag=True
+            x=x-1
+        print
+        x=width-1-y
+
+printStripedDiamond( 7, '.', '%' )
