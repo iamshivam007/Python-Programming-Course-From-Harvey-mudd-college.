@@ -1,0 +1,132 @@
+# python 2
+#
+# Homework 3, Problem 1.5
+#
+# Name: shivam jindal
+#
+# Date:21-06-2015
+# Overall comments:
+#
+
+def mult(n,m):
+    """
+    it return multiplication of n amd m
+    input : n and m as interger
+    output : n *m
+    """
+
+    if(m==0):
+        return 0
+    elif (m <1):
+        return (-n+mult(n,m+1))
+    else :
+        return (n+mult(n,m-1))
+#
+# Tests
+#
+print "mult(6,7)    42 ==", mult(6,7)
+print "mult(6,-7)  -42 ==", mult(6,-7)
+print "mult(-6,7)  -42 ==", mult(-6,7)
+print "mult(-6,-7)  42 ==", mult(-6,-7)
+print "mult(6,0)     0 ==", mult(6,0)
+print "mult(0,7)     0 ==", mult(0,7)
+print "mult(0,0)     0 ==", mult(0,0)
+
+def dot(l1,l2):
+    """
+        dot return dot product of two list
+        input : l1 and l2 as list
+        output : dot product of l1*l2
+    """
+    a=len(l1)
+    b=len(l2)
+    if(a != b or a==0):
+        return 0.0
+    else:
+        return (l1[0]*l2[0] + dot(l1[1:],l2[1:]))
+#
+# Tests
+#
+print "dot( [5,3], [6,4] )     42.0 ==", dot( [5,3], [6,4] ) 
+print "dot( [1,2,3,4], [10,100,1000,10000] )  43210.0 ==", dot( [1,2,3,4], [10,100,1000,10000] ) 
+print "dot( [5,3], [6] )        0.0 ==", dot( [5,3], [6] ) 
+print "dot( [], [6] )           0.0 ==", dot( [], [6] ) 
+print "dot( [], [] )            0.0 ==", dot( [], [6] ) 
+
+
+
+def ind(n,l):
+    """
+    ind find index of n in l
+    input : n as element and l as list or string
+    output : if n is in l then output is index of n otherwise output is length of l
+    """
+    if (n not in l):
+        return len(l)
+    else:
+        return l.index(n)
+        
+#
+# Tests
+#
+print "ind( 42, [ 55, 77, 42, 12, 42, 100 ])  2 ==", ind( 42, [ 55, 77, 42, 12, 42, 100 ])
+print "ind(42, range(0,100))                  42 ==", ind(42, range(0,100))
+print "ind('hi', [ 'hello', 42, True ])       3 ==", ind('hi', [ 'hello', 42, True ])
+print "ind('hi', [ 'well', 'hi', 'there' ])   1 ==", ind('hi', [ 'well', 'hi', 'there' ])
+print "ind('i', 'team')                       4 ==", ind('i', 'team')
+print "ind(' ', 'outer exploration')          5 ==", ind(' ', 'outer exploration')
+
+
+
+def letterscore(l):
+    a=l.upper()
+    if a in dict.keys():
+        return dict[a]
+    else:
+        return 0
+
+
+dict = {'A':1,'N':1,'O':1,'E':1,'R':1,'S':1,'T':1,'U':1,'I':1,'L':1,'B':3,'C':3,'P':3,'M':3,'F':4,'H':4,'W':4,'V':4,'Y':4,'K':5,'Q':10,'Z':10,'J':8,'X':8,'G':2,'D':2}
+print letterscore('w')
+
+def scrabbleScore(l):
+    num=0
+    l=l.upper()
+    for letter in l:
+        if letter in dict.keys():
+            num=num+dict[letter]
+    return num
+    
+
+dict = {'A':1,'N':1,'O':1,'E':1,'R':1,'S':1,'T':1,'U':1,'I':1,'L':1,'B':3,'C':3,'P':3,'M':3,'F':4,'H':4,'W':4,'V':4,'Y':4,'K':5,'Q':10,'Z':10,'J':8,'X':8,'G':2,'D':2}
+#
+# Tests
+#
+print "scrabbleScore('quetzal'):  25 ==", scrabbleScore('quetzal')
+print "scrabbleScore('jonquil'):  23 ==", scrabbleScore('jonquil')
+print "scrabbleScore('syzygy'):   25 ==", scrabbleScore('syzygy')
+print "scrabbleScore('abcdefghijklmnopqrstuvwxyz'):  87 ==", scrabbleScore('abcdefghijklmnopqrstuvwxyz')
+print "scrabbleScore('?!@#$%^&*()'):  0 ==", scrabbleScore('?!@#$%^&*()')
+print "scrabbleScore(''):          0 ==", scrabbleScore('')
+
+def transcribe(string):
+    st=""
+    for letter in string:
+        if letter in dict.keys():
+            st=st+dict[letter]
+    return st
+        
+
+#
+# Tests
+#
+dict = {'A':'U','C':'G','G':'C','T':'A'}
+print "transcribe('ACGT TGCA'):  'UGCAACGU' ==", transcribe('ACGT TGCA')
+print "transcribe('GATTACA'):     'CUAAUGU' ==", transcribe('GATTACA')
+print "transcribe('cs5') :               '' ==", transcribe('cs5')
+print "transcribe('') :                  '' ==", transcribe('')
+
+
+
+
+
