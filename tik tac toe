@@ -1,0 +1,361 @@
+# python 2
+#
+# Homework 9, Problem 2
+#
+# Name:
+#
+
+# here is a function for printing 2d arrays
+# (lists-of-lists) of data
+
+def print2d( A ):
+    """ print2d prints a 2d array, A
+        as rows and columns
+        input: A, a 2d list of lists
+        output: None (no return value)
+    """
+    NR = len(A)
+    NC = len(A[0])
+
+    for r in range(NR): # NR = =numrows
+        for c in range(NC):  # NC == numcols
+            print A[r][c],
+        print
+
+    return None  # this is implied anyway,
+    # when no return statement is present
+
+# some tests for print2d
+A = [ ['X',' ','O'], ['O','X','O'] ]
+#print "2-row, 3-col A is"
+#print2d(A)
+
+A = [ ['X','O'], [' ','X'], ['O','O'], ['O','X'] ]
+#print "4-row, 2-col A is"
+#print2d(A)
+
+
+# create a 2d array from a 1d string
+def createA( NR, NC, s ):
+    """ returns a 2d array with
+        NR rows (numrows) and
+        NC cols (numcols)
+        using the data from s: across the
+        first row, then the second, etc.
+        We'll only test it with enough data!
+    """
+    A = []
+    for r in range(NR):
+        newrow = []
+        for c in range(NC):
+            newrow += [ s[0] ] # add that char
+            s = s[1:]   # get rid of that first char
+        A += [newrow]
+    return A
+
+# a couple of tests for createA:
+A = [ ['X',' ','O'], ['O','X','O'] ]
+newA = createA( 2, 3, 'X OOXO')
+#print "Is newA == A? Should be True:", newA == A
+
+A = [ ['X','O'], [' ','X'], ['O','O'], ['O','X'] ]
+newA = createA( 4, 2, 'XO XOOOX')
+#print "Is newA == A? Should be True:", newA == A
+
+
+def inarow_3east( ch, r_start, c_start, A ):
+    row = len(A)
+    col = len(A[0])
+    result = 0
+    i=r_start;
+    for j in range(c_start,col):
+        if result == 3:
+            break
+        if A[i][j] == ch:
+            result +=1
+        else :
+            result = 0
+    if result > 2:
+        return True
+    else :
+        return False
+
+def inarow_Neast( ch, r_start, c_start, A,N ):
+    row = len(A)
+    col = len(A[0])
+    result = 0
+    i=r_start;
+    for j in range(c_start,col):
+        if result == N:
+            break
+        if A[i][j] == ch:
+            result +=1
+        else :
+            result = 0
+    if result >= N:
+        return True
+    else :
+        return False
+
+def inarow_3south( ch, r_start, c_start, A ):
+    row = len(A)
+    col = len(A[0])
+    result = 0
+    j=c_start;
+    for i in range(r_start,row):
+        if result == 3:
+            break
+        if A[i][j] == ch:
+            result +=1
+        else :
+            result = 0
+    if result > 2:
+        return True
+    else :
+        return False
+
+def inarow_Nsouth( ch, r_start, c_start, A,N ):
+    row = len(A)
+    col = len(A[0])
+    result = 0
+    j=c_start;
+    for i in range(r_start,row):
+        if result == N:
+            break
+        if A[i][j] == ch:
+            result +=1
+        else :
+            result = 0
+    if result >= N:
+        return True
+    else :
+        return False
+    
+def inarow_3se( ch, r_start, c_start, A ):
+    row = len(A)
+    col = len(A[0])
+    result = 0
+    j=c_start;
+    for i in range(r_start,row):
+        if j<col:
+            if result == 3:
+                break
+            if A[i][j] == ch:
+                result +=1
+            else :
+                result = 0
+            j+=1
+    if result > 2:
+        return True
+    else :
+        return False
+
+def inarow_Nse( ch, r_start, c_start, A,N):
+    row = len(A)
+    col = len(A[0])
+    result = 0
+    j=c_start;
+    for i in range(r_start,row):
+        if j<col:
+            if result == N:
+                break
+            if A[i][j] == ch:
+                result +=1
+            else :
+                result = 0
+            j+=1
+    if result >= N:
+        return True
+    else :
+        return False
+    
+def inarow_3ne( ch, r_start, c_start, A ):
+    row = len(A)
+    col = len(A[0])
+    result = 0
+    i=r_start
+    for j in range(c_start,col):
+        if i >= 0:
+            if result == 3:
+                break
+            if A[i][j] == ch:
+                result +=1
+            else :
+                result = 0
+            i-=1
+    if result > 2:
+        return True
+    else :
+        return False
+
+def inarow_Nne( ch, r_start, c_start, A , N):
+    row = len(A)
+    col = len(A[0])
+    result = 0
+    i=r_start
+    for j in range(c_start,col):
+        if i >= 0:
+            if result == N:
+                break
+            if A[i][j] == ch:
+                result +=1
+            else :
+                result = 0
+            i-=1
+    if result >= N:
+        return True
+    else :
+        return False
+
+
+# -*- coding: cp1252 -*-
+# python 2
+#
+# Homework 10, Problem 2
+# Name:
+#
+
+class Board:
+    """ a datatype representing a C4 board
+        with an arbitrary number of rows and cols
+    """
+    
+    def __init__( self, width, height ):
+        """ the constructor for objects of type Board """
+        self.width = width
+        self.height = height
+        W = self.width
+        H = self.height
+        self.data = [ [' ']*W for row in range(H) ]
+
+        # we do not need to return inside a constructor!
+        
+
+    def __repr__(self):
+        """ this method returns a string representation
+            for an object of type Board
+        """
+        H = self.height
+        W = self.width
+        s = ''   # the string to return
+        for row in range(H):
+            s += '|'   
+            for col in range(W):
+                s += self.data[row][col]+'|'
+            s += '\n'
+
+        s += (2*W+1) * '-'    # bottom of the board
+        
+        # and the numbers underneath here
+        
+        return s       # the board is complete, return it
+
+    def addMove(self,row,col,ox):
+        if (col in range(self.width)) and (row in xrange(self.height)):
+            if self.data[row][col]==' ':
+                self.data[row][col]=ox;
+                return
+    def clear( self ):
+        for i in range(self.height):
+            for j in range(self.width):
+                self.data[i][j]=' '
+
+    def setBoard( self, moveString ):
+        """ takes in a string of columns and places
+            alternating checkers in those columns,
+            starting with 'X'
+            
+            For example, call b.setBoard('012345')
+            to see 'X's and 'O's alternate on the
+            bottom row, or b.setBoard('000000') to
+            see them alternate in the left column.
+
+            moveString must be a string of integers
+        """
+        nextCh = 'X'   # start by playing 'X'
+        for colString in moveString:
+            col = int(colString)
+            if 0 <= col <= self.width:
+                self.addMove(col, nextCh)
+            if nextCh == 'X':
+                nextCh = 'O'
+            else:
+                nextCh = 'X'
+
+    def allowsMove(self, c):
+        if c in range(self.width):
+            for x in range(self.height):
+                if self.data[x][c]==' ':
+                    return True
+            return False
+        else :
+            return False
+
+    def isFull(self):
+        for i in range(self.height):
+            for j in range(self.width):
+                if self.data[i][j]==' ':
+                    return False
+        return True
+
+
+    def delMove(self, col):
+        for x in range(self.height):
+            if self.data[x][col] != ' ':
+                self.data[x][col]=' '
+                return
+
+    def winsFor(self, ox):
+        for i in range(self.height):
+            for j in range(self.width-3):
+                if self.data[i][j]==ox and self.data[i][j+1]==ox and self.data[i][j+2]==ox and self.data[i][j+3]==ox:
+                    return True 
+        for i in range(self.height-3):
+            for j in range(self.width):
+                if self.data[i][j]==ox and self.data[i+1][j]==ox and self.data[i+2][j]==ox and self.data[i+3][j]==ox:
+                    return True
+        for i in range(self.height-3):
+            for j in range(self.width-3):
+                if self.data[i][j]==ox and self.data[i+1][j+1]==ox and self.data[i+2][j+2]==ox and self.data[i+3][j+3]==ox:
+                    return True
+        i=self.height-1
+        j=self.width-1
+        while i>2:
+            while j>2:
+                if self.data[i][j]==ox and self.data[i-1][j-1]==ox and self.data[i-2][j-2]==ox and self.data[i-3][j-3]==ox:
+                    return True
+                j-=1
+            i-=1
+        return False
+
+    def hostGame(self):
+        next_char = 'X'
+        number=0
+        print 'Welcome to Connect Four!'
+        print
+        while True:
+            loop = True
+            print self
+            user = input( next_char+'\'s choice :')
+            number+=1
+            while loop:
+                if self.allowsMove(user):
+                    self.addMove(user,next_char)
+                    loop = False
+                else :
+                    user = input( next_char+'\'s choice :')
+            if self.winsFor(next_char):
+                print next_char+' wins Congratulations!'
+                print self
+                break
+            elif number == self.width*self.height:
+                print 'Match is tie'
+                print self
+                break
+            if next_char == 'X':
+                next_char = 'O'
+            else:
+                next_char = 'X'
+
+
+    
