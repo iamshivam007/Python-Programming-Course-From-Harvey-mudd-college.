@@ -1,0 +1,79 @@
+from time import*
+from random import*
+def mutate1(i,ranBL):
+    """
+        it return square of value at ith index in old list(ranBL)
+        input : an index i and a list
+    """
+    return ranBL[i]**2
+
+
+def mutate2(i,ranBL):
+    """
+        it return wrappes left value at ith index of list
+        input : i as an index and ranBL as a list 
+    """
+    l=len(ranBL)
+    return ranBL[(i+l-1)%l]
+
+def mutate3(i,ranBL):
+    """
+        it return 0 or 1 at on each input
+    """
+    return choice([0,1])
+
+def mutate4(i, ranBL, user=0):
+    """ takes as input an index (i) and an old list (ranBL)
+        mutate returns the ith element of a NEW list!
+        * note that mutate returns ONLY the ith element
+          mutate thus needs to be called many times in evolve
+    """
+    if i == user:
+        new_ith_element = 1        # this makes the game easy!
+    else:
+        new_ith_element = ranBL[i] # the new is the same as the old
+    return new_ith_element
+
+def mutate5(i,ranBL,user=0):
+    if i==user:
+        return abs(ranBL[i]-1)
+    else:
+        return ranBL[i]
+
+def mutate6(i,ranBL,user=0):
+    if i==user or i==user+1 or i==user-1:
+        return abs(ranBL[i]-1)
+    else:
+        return ranBL[i]
+
+def randBL(N):
+    return [choice([0,1]) for x in range(N)]
+        
+def evolve(randBL, curgen = 0,number=0):
+    """ This function should evolve ranBL (a list)
+        it starts at curgen, the "current" generation
+        and it ends at generation #5 (for now)
+        
+        It works by calling mutate at each index i.
+    """
+    """
+        i expect approximately 25 generation
+    """
+    print randBL                   # print the old list, L
+    sleep(0)
+    
+    if allOnes(randBL):
+        print number# we're done!
+        return       # no return value... yet
+    else:
+        user = choice([0,1]) 
+        newL = [ mutate6(i, randBL,user) for i in range(len(randBL)) ]
+        return evolve(newL, curgen + 1,number+1)
+
+def allOnes(L):
+    if L==[]:
+        return True
+    elif L[0] == 1:
+        return allOnes(L[1:])
+    else:
+        return False
