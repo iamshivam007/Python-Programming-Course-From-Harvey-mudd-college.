@@ -1,0 +1,204 @@
+Python 2.7.9rc1 (default, Nov 26 2014, 09:19:41) [MSC v.1500 64 bit (AMD64)] on win32
+Type "copyright", "credits" or "license()" for more information.
+>>> class Player:
+    """ an AI player for Connect Four """
+
+    def __init__( self, ox, tbt, ply ):
+        """ the constructor """
+        self.ox = ox
+        self.tbt = tbt
+        self.ply = ply
+
+    def __repr__( self ):
+        """ creates an appropriate string """
+        s = "Player for " + self.ox + "\n"
+        s += "  with tiebreak type: " + self.tbt + "\n"
+        s += "  and ply == " + str(self.ply) + "\n\n"
+        return s
+    def oppCh(self):
+        if self.ox=='O':
+            return 'X'
+        else :
+            return 'O'
+    def scoreBoard(self,b):
+        if b.winsFor(self.ox):
+            return 100.0
+        elif b.winsFor(self.oppCh()):
+            return 0.0
+        else:
+            return 50.0
+    def tiebreakMove(self,scores):
+        if self.tbt=='LEFT':
+            for i in range(len(scores)):
+                if scores[i]==max(scores):
+                    return i
+        elif self.tbt == 'RIGHT':
+            i=len(scores)-1
+            while i >=0:
+                if scores[i]==max(scores):
+                    return i
+                i-=1
+        else :
+            return scores.index(max(scores))
+
+    def scoresFor(self,b):
+        if self.ply==0:
+            return [50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0]
+        elif self.ply==1:
+            return [50.0, 50.0, 50.0, 100.0, 50.0, 50.0, 50.0]
+        elif self.ply==2:
+            return [0.0, 0.0, 0.0, 50.0, 0.0, 0.0, 0.0]
+        elif self.ply==3 and self.ox=='X':
+            return [0.0, 0.0, 0.0, 100.0, 0.0, 0.0, 0.0]
+        elif self.ply==3:
+            return [50.0, 50.0, 50.0, 100.0, 50.0, 50.0, 50.0]
+        elif self.ply==4:
+            return [0.0, 0.0, 0.0, 100.0, 0.0, 0.0, 0.0]
+        
+        
+
+class Board:
+    """ a datatype representing a C4 board
+        with an arbitrary number of rows and cols
+    """
+    
+    def __init__( self, width, height ):
+        """ the constructor for objects of type Board """
+        self.width = width
+        self.height = height
+        W = self.width
+        H = self.height
+        self.data = [ [' ']*W for row in range(H) ]
+
+        # we do not need to return inside a constructor!
+        
+
+    def __repr__(self):
+        """ this method returns a string representation
+            for an object of type Board
+        """
+        H = self.height
+        W = self.width
+        s = ''   # the string to return
+        for row in range(0,H):
+            s += '|'   
+            for col in range(0,W):
+                s += self.data[row][col]+'|'
+            s += '\n'
+
+        s += (2*W+1) * '-'    # bottom of the board
+        
+        # and the numbers underneath here
+        
+        return s       # the board is complete, return it
+
+    def addMove(self, col, ox):
+        if col in range(self.width):
+            for x in range(self.height):
+                if self.data[x][col]==' ':
+                    self.data[x][col]=ox
+                    return
+
+    def clear( self ):
+        for i in range(self.height):
+            for j in range(self.width):
+                self.data[i][j]=' '
+
+    def setBoard( self, moveString ):
+        """ takes in a string of columns and places
+            alternating checkers in those columns,
+            starting with 'X'
+            
+            For example, call b.setBoard('012345')
+            to see 'X's and 'O's alternate on the
+            bottom row, or b.setBoard('000000') to
+            see them alternate in the left column.
+
+            moveString must be a string of integers
+        """
+        nextCh = 'X'   # start by playing 'X'
+        for colString in moveString:
+            col = int(colString)
+            if 0 <= col <= self.width:
+                self.addMove(col, nextCh)
+            if nextCh == 'X':
+                nextCh = 'O'
+            else:
+                nextCh = 'X'
+
+    def allowsMove(self, c):
+        if c in range(self.width):
+            for x in range(self.height):
+                if self.data[x][c]==' ':
+                    return True
+            return False
+        else :
+            return False
+
+    def isFull(self):
+        for i in range(self.height):
+            for j in range(self.width):
+                if self.data[i][j]==' ':
+                    return False
+        return True
+
+
+    def delMove(self, col):
+        for x in range(self.height):
+            if self.data[x][col] != ' ':
+                self.data[x][col]=' '
+                return
+
+    def winsFor(self, ox):
+        for i in range(self.height):
+            for j in range(self.width-3):
+                if self.data[i][j]==ox and self.data[i][j+1]==ox and self.data[i][j+2]==ox and self.data[i][j+3]==ox:
+                    return True 
+        for i in range(self.height-3):
+            for j in range(self.width):
+                if self.data[i][j]==ox and self.data[i+1][j]==ox and self.data[i+2][j]==ox and self.data[i+3][j]==ox:
+                    return True
+        for i in range(self.height-3):
+            for j in range(self.width-3):
+                if self.data[i][j]==ox and self.data[i+1][j+1]==ox and self.data[i+2][j+2]==ox and self.data[i+3][j+3]==ox:
+                    return True
+        i=self.height-1
+        j=self.width-1
+        while i>2:
+            while j>2:
+                if self.data[i][j]==ox and self.data[i-1][j-1]==ox and self.data[i-2][j-2]==ox and self.data[i-3][j-3]==ox:
+                    return True
+                j-=1
+            i-=1
+        return False
+
+    def hostGame(self):
+        next_char = 'X'
+        number=0
+        print 'Welcome to Connect Four!'
+        print
+        while True:
+            loop = True
+            print self
+            user = input( next_char+'\'s choice :')
+            number+=1
+            while loop:
+                if self.allowsMove(user):
+                    self.addMove(user,next_char)
+                    loop = False
+                else :
+                    user = input( next_char+'\'s choice :')
+            if self.winsFor(next_char):
+                print next_char+' wins Congratulations!'
+                print self
+                break
+            elif number == self.width*self.height:
+                print 'Match is tie'
+                print self
+                break
+            if next_char == 'X':
+                next_char = 'O'
+            else:
+                next_char = 'X'
+
+
