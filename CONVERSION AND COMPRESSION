@@ -1,4 +1,4 @@
-def numToBaseB(n,b):
+def numToBaseB(n,b): #decimal to binary conversion
     string = ''
     while n != 0:
         if n%b==0:
